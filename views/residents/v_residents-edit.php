@@ -1,8 +1,3 @@
-<?php
-echo '<pre>';
-print_r($relationship);
-echo '</pre>';
-?>
 <div class="container-fluid">
     <div class="row">
         <div class="ltbody">
@@ -88,15 +83,22 @@ echo '</pre>';
                                         </div>
                                         <?php
                                         if ($house_id !== FALSE) {
+                                            echo '<pre>';
+                                            var_dump($owner);
+                                            var_dump($hof);
+                                            var_dump($resident);
+                                            echo '</pre>';
                                             ?>
                                             <hr>
                                             <div class="row">
                                                 <div class="form-group col-md-4">
                                                     <label class="control-label" for="house"><i class="fa fa-exclamation-circle text-silver"></i> House: </label>
-                                                    <input name="house" type="text" class="form-control" required placeholder="24JDJ19" disabled="disabled" value="<?php echo $house->house_no . ' ' . $house->addr1; ?>">
-                                                    <div class="checkbox">
-                                                        <label><input name="is_owner" type="checkbox" value="1"> house owner</label>&nbsp;
-                                                        <label><input name="is_hof" type="checkbox" value="1"> head of family/tenant</label>
+                                                    <input name="house" type="text" class="form-control" required placeholder="24JDJ19" disabled value="<?php echo $house->house_no . ' ' . $house->addr1; ?>">
+                                                    <div class="checkbox <?php echo isset($owner->id) && ($owner->id != $resident->id) ? 'disabled' : ''; ?>">
+                                                        <label><input <?php echo isset($owner->id) && ($owner->id != $resident->id) ? 'disabled' : ''; ?> <?php echo isset($owner->id) && ($owner->id == $resident->id) ? 'checked' : ''; ?> name="is_owner" type="checkbox" value="1"> house owner</label>&nbsp;
+                                                    </div>
+                                                    <div class="checkbox <?php echo isset($hof->id) && ($hof->id != $resident->id) ? 'disabled' : ''; ?>">
+                                                        <label><input <?php echo isset($hof->id) && ($hof->id != $resident->id) ? 'disabled' : ''; ?> <?php echo isset($hof->id) && ($hof->id == $resident->id) ? 'checked' : ''; ?> name="is_hof" type="checkbox" value="1"> head of family/tenant</label>
                                                     </div>
 
                                                 </div>
@@ -113,9 +115,7 @@ echo '</pre>';
                                                             echo '<option value="' . $owner->id . '" >' . $owner->first_name . ' ' . $owner->last_name . '</option>';
                                                         }
 
-                                                        if (isset($owner->id) && isset($hof->id) && $owner->id != $hof->id) {
-                                                            echo '<option value="' . $hof->id . '" >' . $hof->first_name . ' ' . $hof->last_name . '</option>';
-                                                        } elseif (isset($owner->id) && !isset($hof->id)) {
+                                                        if (isset($hof->id) && (!isset($owner->id) || (isset($owner->id) && ($owner->id != $hof->id)))) {
                                                             echo '<option value="' . $hof->id . '" >' . $hof->first_name . ' ' . $hof->last_name . '</option>';
                                                         }
                                                         ?>

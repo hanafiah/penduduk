@@ -72,10 +72,12 @@
                                             <div class="row">
                                                 <div class="form-group col-md-4">
                                                     <label class="control-label" for="house"><i class="fa fa-exclamation-circle text-silver"></i> House: </label>
-                                                    <input name="house" type="text" class="form-control" required placeholder="24JDJ19" disabled="disabled" value="<?php echo $house->house_no . ' ' . $house->addr1; ?>">
-                                                    <div class="checkbox">
-                                                        <label><input <?php echo isset($owner->id) ? 'disabled="disabled"' : ''; ?> name="is_owner" type="checkbox" value="1"> house owner</label>&nbsp;
-                                                        <label><input <?php echo isset($hof->id) ? 'disabled="disabled"' : ''; ?> name="is_hof" type="checkbox" value="1"> head of family/tenant</label>
+                                                    <input name="house" type="text" class="form-control" required placeholder="24JDJ19" disabled value="<?php echo $house->house_no . ' ' . $house->addr1; ?>">
+                                                    <div class="checkbox <?php echo isset($owner->id) ? 'disabled' : ''; ?>">
+                                                        <label><input <?php echo isset($owner->id) ? 'disabled checked' : ''; ?> name="is_owner" type="checkbox" value="1"> house owner</label>&nbsp;
+                                                    </div>
+                                                    <div class="checkbox <?php echo isset($hof->id) ? 'disabled' : ''; ?>">
+                                                        <label><input <?php echo isset($hof->id) ? 'disabled checked' : ''; ?> name="is_hof" type="checkbox" value="1"> head of family/tenant</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -94,9 +96,7 @@
                                                                 echo '<option value="' . $owner->id . '" >' . $owner->first_name . ' ' . $owner->last_name . '</option>';
                                                             }
 
-                                                            if (isset($owner->id) && isset($hof->id) && $owner->id != $hof->id) {
-                                                                echo '<option value="' . $hof->id . '" >' . $hof->first_name . ' ' . $hof->last_name . '</option>';
-                                                            } elseif (isset($owner->id) && !isset($hof->id)) {
+                                                            if (isset($hof->id) && (!isset($owner->id) || (isset($owner->id) && ($owner->id != $hof->id)))) {
                                                                 echo '<option value="' . $hof->id . '" >' . $hof->first_name . ' ' . $hof->last_name . '</option>';
                                                             }
                                                             ?>

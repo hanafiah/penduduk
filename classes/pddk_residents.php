@@ -198,6 +198,7 @@ class Pddk_Residents extends Pddk_Core {
                 /**
                  * update relation
                  */
+                
                 if (!$this->_post('is_owner', FALSE) && !$this->_post('is_hof', FALSE)) {
                     $data = array(
                         $this->view_data['house_id'],
